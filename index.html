@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <title>Ferragatti — Stiamo lavorando alla nuova bottega</title>
+    <meta
+      name="description"
+      content="Ferragatti. Stiamo lavorando alla nuova bottega — lasciate un contatto, vi scriviamo all'apertura."
+    />
+    <meta name="theme-color" content="#f3f1ec" />
+
+    <link
+      rel="preload"
+      href="assets/fonts/playfair-display-400900-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <noscript
+      ><style>
+        .apertura {
+          display: none;
+        }
+      </style></noscript
+    >
+  </head>
+
+  <body>
+    <div class="apertura" id="apertura" aria-hidden="true">
+      <div class="apertura-inner">
+        <p class="apertura-nome" aria-label="Ferragatti">
+          <span style="--t: 0ms">F</span><span style="--t: 150ms">e</span
+          ><span style="--t: 260ms">r</span><span style="--t: 380ms">r</span
+          ><span style="--t: 540ms">a</span><span style="--t: 640ms">g</span
+          ><span style="--t: 780ms">a</span><span style="--t: 900ms">t</span
+          ><span style="--t: 1010ms">t</span><span style="--t: 1170ms">i</span>
+        </p>
+        <span class="apertura-linea"><i id="apertura-barra"></i></span>
+      </div>
+    </div>
+
+    <a class="skip" href="#top">Vai al contenuto</a>
+
+    <main id="top">
+      <section class="hero" data-tone="light">
+        <video
+          id="mare"
+          preload="auto"
+          autoplay
+          muted
+          loop
+          playsinline
+          class="hero-media"
+          aria-hidden="true"
+        >
+          <source
+            src="assets/media/mare-verticale-av1.mp4"
+            type='video/mp4; codecs="av01.0.08M.08, opus"'
+            media="(max-width: 900px) and (orientation: portrait)"
+          />
+          <source
+            src="assets/media/mare-verticale-hevc.mp4"
+            type='video/mp4; codecs="hvc1.1.6.L120.90, mp4a.40.2"'
+            media="(max-width: 900px) and (orientation: portrait)"
+          />
+          <source
+            src="assets/media/mare-verticale-h264.mp4"
+            type='video/mp4; codecs="avc1.640032, mp4a.40.2"'
+            media="(max-width: 900px) and (orientation: portrait)"
+          />
+          <source
+            src="assets/media/mare-1440-av1.mp4"
+            type='video/mp4; codecs="av01.0.12M.08, opus"'
+            media="(min-width: 1700px)"
+          />
+          <source
+            src="assets/media/mare-1080-av1.mp4"
+            type='video/mp4; codecs="av01.0.08M.08, opus"'
+          />
+          <source
+            src="assets/media/mare-1080-hevc.mp4"
+            type='video/mp4; codecs="hvc1.1.6.L120.90, mp4a.40.2"'
+          />
+          <source
+            src="assets/media/mare-1080-h264.mp4"
+            type='video/mp4; codecs="avc1.640032, mp4a.40.2"'
+          />
+        </video>
+
+        <div class="grana" aria-hidden="true"></div>
+
+        <a class="mark" href="https://ferragatti.it">Ferragatti</a>
+
+        <button
+          type="button"
+          class="audio-btn"
+          id="audio-btn"
+          aria-pressed="false"
+          aria-label="Ascolta il mare"
+        >
+          <span class="audio-label" aria-hidden="true">Ascolta il mare</span>
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path class="ico-body" d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z" />
+            <path class="ico-wave ico-wave-1" d="M16 9.2a4 4 0 0 1 0 5.6" />
+            <path
+              class="ico-wave ico-wave-2"
+              d="M18.6 6.6a7.6 7.6 0 0 1 0 10.8"
+            />
+            <path class="ico-mute" d="M3.5 3.5l17 17" />
+          </svg>
+        </button>
+
+        <div class="hero-inner rise">
+          <h1 class="hero-title">Stiamo lavorando alla nuova bottega</h1>
+
+          <form class="news-form" id="letter-news" novalidate>
+            <span class="news-field">
+              <label for="letter-email" class="skip">Indirizzo email</label>
+              <input
+                id="letter-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="indirizzo email"
+                required
+              />
+              <button type="submit">Iscrivimi</button>
+            </span>
+
+            <span class="news-trap" aria-hidden="true">
+              <label for="letter-azienda">Azienda</label>
+              <input
+                id="letter-azienda"
+                name="azienda"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </span>
+
+            <div class="news-consent-wrap" inert>
+              <div>
+                <label class="news-consent" for="letter-consenso">
+                  <input
+                    id="letter-consenso"
+                    name="consenso"
+                    type="checkbox"
+                    value="1"
+                    required
+                  />
+                  <span
+                    >Acconsento a ricevere la newsletter di Ferragatti e ho
+                    letto
+                    <a href="privacy/">l'informativa sulla privacy</a>.</span
+                  >
+                </label>
+              </div>
+            </div>
+
+            <p class="news-error" role="alert" aria-live="assertive"></p>
+          </form>
+          <p class="news-done">
+            Grazie. Controllate la posta: c'è un link per confermare la mail.
+          </p>
+        </div>
+
+        <p class="watermark">
+          <span class="wm-copy"
+            >© <a href="https://ferragatti.it">Ferragatti</a> 2026</span
+          >
+          <span class="sep" aria-hidden="true">—</span>
+          <span class="wm-by"
+            >designed by
+            <a href="https://11-studio.it" rel="noopener" target="blank"
+              >11-studio.it</a
+            ></span
+          >
+        </p>
+      </section>
+    </main>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/site.js"></script>
+  </body>
+</html>
