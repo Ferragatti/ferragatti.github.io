@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="no-referrer" />
+
+    <title>Ferragatti — Conferma dell'iscrizione</title>
+    <meta name="theme-color" content="#f3f1ec" />
+
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <a class="mark" href="../">Ferragatti</a>
+
+      <div class="page-inner" id="esito" aria-live="polite">
+        <h1 class="hero-title">Un momento</h1>
+        <p>Stiamo confermando l'iscrizione…</p>
+        <noscript>
+          <p>Per confermare serve JavaScript. In alternativa scriveteci a
+            <a href="mailto:atelier@ferragatti.it">atelier@ferragatti.it</a>.</p>
+        </noscript>
+      </div>
+    </main>
+
+    <script src="../assets/js/config.js"></script>
+    <script>
+      (function () {
+        'use strict';
+
+        var box = document.getElementById('esito');
+
+        function mostra(titolo, testo, bottone) {
+          box.innerHTML = '';
+          var h = document.createElement('h1');
+          h.className = 'hero-title';
+          h.textContent = titolo;
+          var p = document.createElement('p');
+          p.textContent = testo;
+          box.appendChild(h);
+          box.appendChild(p);
+          if (bottone) {
+            var a = document.createElement('a');
+            a.className = 'page-btn';
+            a.href = bottone.href;
+            a.textContent = bottone.testo;
+            box.appendChild(a);
+          }
+        }
+
+        var home = { href: '../', testo: 'Torna al sito' };
+        var t = new URLSearchParams(location.search).get('t') || '';
+        var endpoint = window.NEWSLETTER_ENDPOINT;
+
+        if (!/^[A-Za-z0-9_-]{43}$/.test(t)) {
+          return mostra(
+            'Link non valido',
+            "Il link non è integro. Se l'avete copiato dalla mail, controllate di averlo preso tutto.",
+            home
+          );
+        }
+        if (!endpoint || !/^https:\/\//.test(endpoint)) {
+          return mostra('Non ci siamo riusciti', 'Il servizio non è raggiungibile. Riprovate più tardi.', home);
+        }
+
+        var url = endpoint + '?azione=conferma&formato=json&t=' + encodeURIComponent(t);
+        fetch(url, { redirect: 'follow' })
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (r) {
+            if (r && r.ok) return location.replace('../grazie/');
+            if (r && r.esito === 'scaduto') {
+              return mostra(
+                'Il link è scaduto',
+                "Per sicurezza i link di conferma valgono sette giorni. Iscrivetevi di nuovo: arriverà una mail nuova.",
+                home
+              );
+            }
+            mostra(
+              'Link non valido',
+              'Questo link non corrisponde a nessuna iscrizione in attesa.',
+              home
+            );
+          })
+          .catch(function () {
+            mostra(
+              'Non ci siamo riusciti',
+              'Non siamo riusciti a confermare in questo momento. Il link resta valido: riprovate fra poco.',
+              { href: location.href, testo: 'Riprova' }
+            );
+          });
+      })();
+    </script>
+  </body>
+</html>
