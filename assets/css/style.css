@@ -412,7 +412,7 @@ form.sending .news-field button {
   font-family: var(--font);
   font-weight: 500;
   font-size: clamp(0.9rem, 1.6vw, 1.05rem);
-  letter-spacing: var(--track-caps);
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
