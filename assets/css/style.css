@@ -141,6 +141,7 @@ body {
   line-height: 1.5;
   letter-spacing: var(--track-caps);
   text-transform: uppercase;
+  text-wrap: balance; /* su mobile niente "bottega" da sola a capo */
   color: var(--ink);
   margin: 0 0 clamp(1.6rem, 4vh, 2.4rem);
 }
@@ -723,6 +724,11 @@ form.sending .news-field button {
       rgba(0, 0, 0, 0.55) 100%
     );
   }
+  /* il titolo sta su una riga sola, largo quanto il campo email:
+     il corpo segue lo schermo e si ferma quando il campo smette di crescere */
+  .hero-title {
+    font-size: min(3.55vw, 0.98rem);
+  }
   .watermark {
     line-height: 1.5;
   }
@@ -747,7 +753,6 @@ form.sending .news-field button {
     --pad-x: 1.2rem;
   }
   .hero-title {
-    font-size: 0.86rem;
     letter-spacing: 0.06em;
   }
   .news-field input {
