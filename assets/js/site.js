@@ -18,6 +18,12 @@
     var video = document.getElementById('mare');
     if (!box) return rivela();
 
+    if (document.documentElement.classList.contains('salta-apertura')) {
+      try { sessionStorage.removeItem('ferragatti-salta'); } catch (e) {}
+      if (box.parentNode) box.parentNode.removeChild(box);
+      return rivela();
+    }
+
     var MIN_MS = 2400;
     var MAX_MS = 9000;
     var inizio = Date.now();
@@ -161,6 +167,42 @@
       if (campo) campo.focus();
     };
 
+    var CHIAVE = 'ferragatti-news';
+    var apriConsenso = function () {
+      if (involucro) involucro.removeAttribute('inert');
+      form.classList.add('ask-consent');
+    };
+    var salva = function () {
+      try {
+        sessionStorage.setItem(CHIAVE, JSON.stringify({
+          email: input ? input.value : '',
+          consenso: !!(consenso && consenso.checked),
+          aperto: form.classList.contains('ask-consent'),
+        }));
+      } catch (e) {}
+    };
+    var dimentica = function () {
+      try { sessionStorage.removeItem(CHIAVE); } catch (e) {}
+    };
+    (function ripristina() {
+      var stato = null;
+      try { stato = JSON.parse(sessionStorage.getItem(CHIAVE) || 'null'); } catch (e) {}
+      if (!stato) return;
+      if (input && stato.email) input.value = stato.email;
+      if (stato.aperto && consenso) {
+        apriConsenso();
+        consenso.checked = !!stato.consenso;
+      }
+    })();
+    if (input) input.addEventListener('input', salva);
+    if (consenso) consenso.addEventListener('change', salva);
+    form.addEventListener('click', function (ev) {
+      if (ev.target.closest && ev.target.closest('.news-consent a')) {
+        salva();
+        try { sessionStorage.setItem('ferragatti-salta', '1'); } catch (e) {}
+      }
+    });
+
     var occupato = function (si) {
       form.classList.toggle('sending', si);
       form.setAttribute('aria-busy', si ? 'true' : 'false');
@@ -178,8 +220,8 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return mostraErrore('email', input);
 
       if (consenso && !form.classList.contains('ask-consent')) {
-        if (involucro) involucro.removeAttribute('inert');
-        form.classList.add('ask-consent');
+        apriConsenso();
+        salva();
         consenso.focus({ preventScroll: true });
         return;
       }
@@ -206,6 +248,7 @@
           if (!risposta || !risposta.ok) {
             return mostraErrore((risposta && risposta.errore) || 'server', risposta && risposta.errore === 'email' ? input : null);
           }
+          dimentica();
           form.classList.add('sent');
           var done = form.parentNode.querySelector('.news-done');
           if (done) {
